@@ -30,8 +30,12 @@ hj <tty> <command> [ -s/--strip]
 ```
 
 ### Shortcuts
-  :br -> send break
-  :cr -> send carriage return (\r\n)
-  :d -> send EOT (ctrl +d)
-  :logout -> logs this tty out (kills term)
-  :cr -> hit return 
+
+| shortcut   | description                 |
+|------------|-----------------------------
+| ```:br```  | send break                  |
+| ```:cr```  | send carriage return (\r\n) |
+| ```:d```   |  send EOT (ctrl +d)         |
+|```:logout```| logs this tty out (kills term)|
+|```:cr``` | hit return |
+

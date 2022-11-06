@@ -9,10 +9,12 @@ import argparse
 import subprocess
 
 USAGE = """
-hj <TTY> <COMMAND>
+hj <TTY> <COMMAND> [-s/--strip]
 hj list
 
-COMMAND may contain shortcuts:
+-s/--strip: remove the carriage return from <COMMAND>
+
+<COMMAND> may contain shortcuts:
   :br -> send break
   :cr -> send \n
   :d -> send EOT, closing the TERM session
@@ -22,6 +24,7 @@ COMMAND may contain shortcuts:
 parser = argparse.ArgumentParser(usage=USAGE, description=argparse.SUPPRESS)
 parser.add_argument("tty", action="store")
 parser.add_argument("command_chunks", nargs="*")
+parser.add_argument("-s", "--strip", action = "store_true", default = False, help = "Strip newline from the command?")
 
 
 class HijackException(Exception):
@@ -179,4 +182,4 @@ if __name__ == '__main__':
             cmd += " " + str(arg)
 
         if cmd.strip():
-            pipe.inject(cmd)
+            pipe.inject(cmd, strip = args.strip)

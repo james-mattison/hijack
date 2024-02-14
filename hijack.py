@@ -24,7 +24,7 @@ hj list
 parser = argparse.ArgumentParser(usage=USAGE, description=argparse.SUPPRESS)
 parser.add_argument("tty", action="store")
 parser.add_argument("command_chunks", nargs="*")
-parser.add_argument("-s", "--strip", action = "store_true", default = False, help = "Strip newline from the command?")
+parser.add_argument("-s", "--strip", action="store_true", default=False, help="Strip newline from the command?")
 
 
 class HijackException(Exception):
@@ -47,14 +47,13 @@ class TTYPipe:
     @staticmethod
     def _validate_pipe(dev_tty: str):
         """
-
+        Ensure that `dev_tty` points to a valid descriptor.
         """
         if not os.path.exists(dev_tty):
             if not os.path.exists(os.path.join("/dev", dev_tty)):
                 raise HijackException(f"Invalid pipe - no such file {dev_tty}")
             else:
                 dev_tty = os.path.join("/dev", dev_tty)
-
         _pipe = os.open(dev_tty, os.O_RDWR)
 
         if not _pipe:

@@ -1,4 +1,4 @@
-image: docker:dind
+image: docker:latest
 
 services:
  - docker:dind
@@ -6,6 +6,8 @@ services:
 variables: 
   DOCKER_TLS_CERTDIR: ""
   GIT_SUBMODULE_STRATEGY: recursive
+  DOCKER_HOST: tcp://docker:2375
+
 
 build_hijack:
   stage: build
@@ -15,5 +17,6 @@ build_hijack:
     - docker login $CI_REGISTRY -u $REGISTRY_USER -p $REGISTRY_PASSWORD
     - docker build -t hijack:latest . 
     - docker run hijack:latest hj list
-    - docker tag hijack:latest registry.gitlab.slovendor.com/hijack:latest
-    - docker push registry.gitlab.slovendor.com/hijack:latest
+    - docker tag hijack:latest registry.gitlab.slovendor.com:42069/hijack:latest
+    - docker push registry.gitlab.slovendor.com:42069/hijack:latest
+    - docker push hijack:latest

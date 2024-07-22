@@ -13,4 +13,3 @@ build_hijack:
   script:
     - docker build -t hijack:latest . 
     - docker run hijack:latest hj list
-  - 

@@ -12,6 +12,8 @@ build_hijack:
 
   script:
     - unset DOCKER_HOST
-    - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+    - docker login $CI_REGISTRY -u $REGISTRY_USER -p $REGISTRY_PASSWORD
     - docker build -t hijack:latest . 
     - docker run hijack:latest hj list
+    - docker tag hijack:latest registry.gitlab.slovendor.com/hijack:latest
+    - docker push registry.gitlab.slovendor.com/hijack:latest

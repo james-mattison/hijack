@@ -1,0 +1,16 @@
+image: docker:dind
+
+services:
+ - docker:dind
+
+variables: 
+  DOCKER_TLS_CERTDIR: ""
+  GIT_SUBMODULE_STRATEGY: recursive
+
+build_hijack:
+  stage: build
+
+  script:
+    - docker build -t hijack:latest . 
+    - docker run hijack:latest hj list
+  - 

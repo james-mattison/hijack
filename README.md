@@ -2,40 +2,58 @@
 
 ---
 
-Inject input into another TTY
+This tool allows injection of commands into another user's tty.
 
-### Installation:
 
-**On Linux**:
 
-`sudo cp hijack.py /usr/bin/hj`
+Also allows injection into another user's SSH session. You can inject literal BASH commands into the other user's TTY _as that user_.
 
-**On Mac**
+The other user sees the commad that is entered into their terminal, and also gets all the output from the command (but you can certainly pipe the output to a place where you can also read it.)
 
-```
-mkdir -p /usr/local/bin
-sudo cp hijack.py /usr/local/bin/hj
-```
+#### **Example:**
 
-### Usage:
-
-**List hijackable  ttys**:
-```
-tty list
-```
-**Run a commmand on `<tty>`:**
+You can run the command 
 
 ```bash
-hj <tty> <command> [ -s/--strip]
+hj tty002 echo hello` 
 ```
 
-### Shortcuts
+... to run the **literal command** `echo hello` from the other user's terminal.
 
-| shortcut   | description                 |
-|------------|-----------------------------
-| ```:br```  | send break                  |
-| ```:cr```  | send carriage return (\r\n) |
-| ```:d```   |  send EOT (ctrl +d)         |
-|```:logout```| logs this tty out (kills term)|
-|```:cr``` | hit return |
+You can enclose **complex bash commands** in single quotes, and run them: 
+
+```bash
+hj tty002 echo 'hello ;  x=150; echo $x; x=$( date ); echo "$x"
+```
+
+... _carraige returns are accepatble here:_
+
+```bash
+hj tty002 echo 'hello
+  x=150
+  echo $x
+  x=$( date )
+  echo "$x"'
+```
+
+Produces the exact same output.
+
+#### **Sending Signals**
+
+For example:
+- `:br` Send `SIGINT` (`Ctrl+C`)
+- `:d` Send `SIGEND` (`Ctrl+D`)
+- `:\n` Hit `Enter` on the Terminal
+- `:logout` Send both SIGINT and SIGEND on the user's terminal, then kill the user's process.
+
+Sent by:
+
+```hj ttys002 :br```
+
+### Reporting bugs / feature requests:
+
+Please use this repository's issue tracking to report any issues or feature requests.
+
+
+
 

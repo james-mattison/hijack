@@ -19,7 +19,7 @@ hj list
   :cr -> send \n
   :d -> send EOT, closing the TERM session
   :logout -> force log the user out
-  :cr -> hit return
+  
 """
 parser = argparse.ArgumentParser(usage=USAGE, description=argparse.SUPPRESS)
 parser.add_argument("tty", action="store")
